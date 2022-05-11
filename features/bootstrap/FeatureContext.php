@@ -15,7 +15,7 @@ class FeatureContext implements Context
 
     public function __construct() {
         $this->shelf = new Shelf();
-        $this->basket = new Basket();
+        $this->basket = new Basket($this->shelf);
     }
 
     /**
@@ -47,6 +47,6 @@ class FeatureContext implements Context
      */
     public function theOverallBasketPriceShouldBePs($price)
     {
-        PHPUnit_Framework_Assert::assertSame($price, $this->basket->getTotalPrice());
+        PHPUnit_Framework_Assert::assertSame(floatval($price), $this->basket->getTotalPrice());
     }
 }
