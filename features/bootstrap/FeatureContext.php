@@ -10,35 +10,43 @@ use Behat\Gherkin\Node\TableNode;
  */
 class FeatureContext implements Context
 {
+    private Shelf $shelf;
+    private Basket $basket;
+
+    public function __construct() {
+        $this->shelf = new Shelf();
+        $this->basket = new Basket();
+    }
+
     /**
      * @Given there is a :arg1, which costs £:arg2
      */
-    public function thereIsAWhichCostsPs($arg1, $arg2)
+    public function thereIsAWhichCostsPs($product, $price)
     {
-        throw new PendingException();
+        $this->shelf->setProductPrice($product, floatval($price));
     }
 
     /**
      * @When I add the :arg1 to the basket
      */
-    public function iAddTheToTheBasket($arg1)
+    public function iAddTheToTheBasket($product)
     {
-        throw new PendingException();
+        $this->basket->addProduct($product);
     }
 
     /**
      * @Then I should have :arg1 product(s) in the basket
      */
-    public function iShouldHaveProductInTheBasket($arg1)
+    public function iShouldHaveProductInTheBasket($count)
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertCount(intval($count), $this->basket);
     }
 
     /**
      * @Then the overall basket price should be £:arg1
      */
-    public function theOverallBasketPriceShouldBePs($arg1)
+    public function theOverallBasketPriceShouldBePs($price)
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertSame($price, $this->basket->getTotalPrice());
     }
 }
