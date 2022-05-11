@@ -20,7 +20,15 @@ final class Basket implements Countable {
 
     public function getTotalPrice(): float {
         return $this->productsPrice
-            + ($this->productsPrice * 0.2)
-            + ($this->productsPrice > 10 ? 2.0 : 3.0);
+            + $this->calculateVAT($this->productsPrice)
+            + $this->calculateDeliveryCost($this->productsPrice);
+    }
+
+    private function calculateVAT($productsPrice): float {
+        return $productsPrice * 0.2;
+    }
+
+    private function calculateDeliveryCost($productsPrice): float {
+        return $productsPrice > 10 ? 2.0 : 3.0;
     }
 }
